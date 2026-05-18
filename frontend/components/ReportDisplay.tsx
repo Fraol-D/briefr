@@ -22,7 +22,20 @@ type ResearchResponse = {
 
 type ReportDisplayProps = {
   report: ResearchResponse;
+  question: string;
 };
+
+const stopWords = new Set([
+  "is",
+  "the",
+  "a",
+  "an",
+  "why",
+  "how",
+  "what",
+  "where",
+  "when"
+]);
 
 const containerVariants = {
   hidden: {},
@@ -51,7 +64,16 @@ const formatSourceLabel = (value: string, index: number) => {
   }
 };
 
-export default function ReportDisplay({ report }: ReportDisplayProps) {
+const buildReportFilename = (question: string) => {
+  const words = question
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((word) => word && !stopWords.has(word));
+  const slug = words.slice(0, 3).join("-");
+  return `${slug || "briefr-report"}.md`;
+};
+
+export default function ReportDisplay({ report, question }: ReportDisplayProps) {
   const [copied, setCopied] = useState(false);
 
   const markdown = useMemo(() => {
@@ -88,7 +110,7 @@ export default function ReportDisplay({ report }: ReportDisplayProps) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "briefr-report.md";
+    anchor.download = buildReportFilename(question);
     document.body.appendChild(anchor);
     anchor.click();
     anchor.remove();

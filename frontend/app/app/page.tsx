@@ -164,7 +164,9 @@ export default function AppPage() {
         </AnimatePresence>
 
         <AnimatePresence>
-          {report && !loading && <ReportDisplay report={report} />}
+          {report && !loading && (
+            <ReportDisplay report={report} question={question} />
+          )}
         </AnimatePresence>
       </div>
     </main>
