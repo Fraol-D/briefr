@@ -57,9 +57,9 @@ export default function ResearchForm({
           <ToggleGroup
             type="single"
             value={depth}
-            onValueChange={(value) => {
+            onValueChange={(value: string) => {
               if (value === "quick" || value === "deep") {
-                onDepthChange(value);
+                onDepthChange(value as "quick" | "deep");
               }
             }}
           >
