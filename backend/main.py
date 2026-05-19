@@ -1,3 +1,4 @@
+import logging
 import os
 
 from dotenv import load_dotenv
@@ -12,6 +13,10 @@ from models.schemas import ResearchRequest, ResearchResponse
 load_dotenv()
 
 app = FastAPI(title="AI Research Agent")
+
+logger = logging.getLogger("briefr")
+if not logger.handlers:
+    logging.basicConfig(level=logging.INFO)
 
 origins = [
     origin.strip()
@@ -57,6 +62,7 @@ def research(request: ResearchRequest) -> ResearchResponse:
         report = synthesize_report(request.question, sub_answers, request.depth)
         return report
     except Exception as exc:
+        logger.exception("Research request failed")
         if _is_rate_limit_error(exc):
             raise HTTPException(
                 status_code=429, detail="Please wait a moment and try again."
