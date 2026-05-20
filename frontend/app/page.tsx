@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import DiamondField from "@/components/DiamondField";
-import Marquee from "@/components/Marquee";
-import { Button } from "@/components/ui/button";
+import DiamondField from "../components/DiamondField";
+import Marquee from "../components/Marquee";
+import { Badge } from "../components/ui/badge";
+import { Button } from "../components/ui/button";
 
 const headline = "Research anything. Get answers in seconds.";
 
@@ -144,6 +145,98 @@ export default function Page() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20">
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+          <div>
+            <span className="text-xs uppercase tracking-[0.3em] text-[var(--color-secondary-text)]">
+              Sample output
+            </span>
+          </div>
+          <div className="rounded-3xl border border-white/10 bg-[rgba(var(--color-brand-rgb),0.82)] p-6 font-report shadow-[0_0_0_1px_rgba(var(--color-accent-rgb),0.45),0_0_52px_rgba(var(--color-accent-rgb),0.24)]">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="font-display text-2xl font-semibold text-white">
+                  Research Report
+                </h2>
+                <p className="mt-2 text-sm text-[var(--color-secondary-text)]">
+                  Question: What is the state of AI agents in 2026?
+                </p>
+                <p className="text-sm text-[var(--color-secondary-text)]">
+                  2 min read
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Button variant="outline" size="sm">
+                  Copy
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled
+                  className="cursor-not-allowed opacity-50"
+                >
+                  Download .md
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-6 space-y-6">
+              <div className="rounded-2xl border border-white/10 bg-[var(--color-dark-surface)] p-5">
+                <h3 className="font-display text-lg font-semibold text-white">
+                  Executive Summary
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[var(--color-light-contrast)]">
+                  Enterprise adoption of AI agents accelerated in 2026 as model
+                  reliability and tool integrations improved across major
+                  platforms. Buyers are consolidating around a small set of
+                  orchestration layers while demanding stronger safety controls
+                  and verifiable provenance for automated actions.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-[rgba(var(--color-brand-rgb),0.7)] p-5">
+                <h4 className="font-display text-lg font-semibold text-white">
+                  Key Players
+                </h4>
+                <p className="mt-3 text-sm leading-7 text-[var(--color-light-contrast)]">
+                  OpenAI, Anthropic, and Google continue to define the baseline
+                  agent stack with embedded tools, while newer platforms such as
+                  Cohere and Mistral are pushing specialized deployment options.
+                  Infrastructure vendors are racing to standardize workflows and
+                  observability so agents can operate safely across production
+                  environments.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge variant="indigo">openai.com/research</Badge>
+                  <Badge variant="indigo">anthropic.com/news</Badge>
+                  <Badge variant="indigo">cloud.google.com/ai</Badge>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-[rgba(var(--color-brand-rgb),0.7)] p-5">
+                <h4 className="font-display text-lg font-semibold text-white">
+                  Where the Market is Heading
+                </h4>
+                <p className="mt-3 text-sm leading-7 text-[var(--color-light-contrast)]">
+                  Agent workflows are moving from chat-style pilots to
+                  persistent, multi-step automations that live inside business
+                  systems. The next phase will center on governance, agent
+                  marketplaces, and tighter alignment between model providers
+                  and enterprise security teams.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge variant="indigo">gartner.com/ai</Badge>
+                  <Badge variant="indigo">forrester.com/agents</Badge>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-[var(--color-secondary-text)]">
+            Every report includes sources, sections, and a downloadable brief.
+          </p>
         </div>
       </section>
 

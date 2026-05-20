@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import ResearchForm from "@/components/ResearchForm";
-import ReportDisplay from "@/components/ReportDisplay";
-import ThinkingSteps from "@/components/ThinkingSteps";
+import ResearchForm from "../../components/ResearchForm";
+import ReportDisplay from "../../components/ReportDisplay";
+import ThinkingSteps from "../../components/ThinkingSteps";
 
 type ResearchSection = {
   title: string;

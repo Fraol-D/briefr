@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Inter, Manrope, Work_Sans } from "next/font/google";
 
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "../components/Navbar";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans" });
