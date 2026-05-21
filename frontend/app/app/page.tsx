@@ -109,7 +109,11 @@ export default function AppPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[var(--color-dark-surface)] px-6 pb-24">
+    <main className="min-h-screen px-6 pb-24">
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_30%,_#1e3a6e_0%,_#0d1117_55%,_#080c14_100%)]"
+      />
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 pt-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
