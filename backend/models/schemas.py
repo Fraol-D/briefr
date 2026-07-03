@@ -1,4 +1,4 @@
-from typing import List, Literal
+from typing import Dict, List, Literal
 
 from pydantic import BaseModel, Field
 
@@ -18,5 +18,6 @@ class ResearchResponse(BaseModel):
     summary: str
     sections: List[ResearchSection]
     all_sources: List[str]
+    source_labels: Dict[str, str] = Field(default_factory=dict)
     read_time_minutes: int
     sub_questions_used: List[str]

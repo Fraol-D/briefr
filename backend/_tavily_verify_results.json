@@ -1,0 +1,117 @@
+{
+  "runs_completed": 1,
+  "total_citations": 14,
+  "source_page_pct": 100.0,
+  "avg_pipeline_seconds": 36.9,
+  "gemini_calls_per_run": 2,
+  "results": [
+    {
+      "question": "What are the health benefits of drinking green tea?",
+      "pipeline_seconds": 36.9,
+      "decompose_seconds": 22.7,
+      "tavily_seconds": 9.0,
+      "synthesize_seconds": 5.1,
+      "gemini_calls": 2,
+      "citations": [
+        {
+          "url": "https://health.clevelandclinic.org/green-tea-health-benefits",
+          "label": "10 Reasons Green Tea Is Good for You",
+          "final_url": "https://health.clevelandclinic.org/green-tea-health-benefits",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11899301",
+          "label": "Green Tea: Current Knowledge and Issues",
+          "final_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11899301",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9871939",
+          "label": "The effects of green tea supplementation on cardiovascular risk factors",
+          "final_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9871939/",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://roguecommunityhealth.org/blog/benefits-green-tea",
+          "label": "8 Health Benefits of Drinking Green Tea",
+          "final_url": "https://roguecommunityhealth.org/blog/benefits-green-tea",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 403
+        },
+        {
+          "url": "https://www.ahajournals.org/doi/10.1161/JAHA.122.026477",
+          "label": "Coffee and Green Tea Consumption and Cardiovascular Disease ...",
+          "final_url": "https://www.ahajournals.org/doi/10.1161/JAHA.122.026477",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 403
+        },
+        {
+          "url": "https://www.cancerresearchuk.org/about-cancer/treatment/complementary-alternative-therapies/individual-therapies/green-tea",
+          "label": "Green tea | Complementary and alternative therapy | Cancer Research UK",
+          "final_url": "https://www.cancerresearchuk.org/about-cancer/treatment/complementary-alternative-therapies/individual-therapies/green-tea",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.cochrane.org/evidence/CD005004_green-tea-prevention-cancer",
+          "label": "Green tea for the prevention of cancer | Cochrane",
+          "final_url": "https://www.cochrane.org/evidence/CD005004_green-tea-prevention-cancer",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 403
+        },
+        {
+          "url": "https://www.health.harvard.edu/heart-health/green-tea-may-lower-heart-disease-risk",
+          "label": "Green tea may lower heart disease risk - Harvard Health",
+          "final_url": "https://www.health.harvard.edu/heart-health/green-tea-may-lower-heart-disease-risk",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.healthline.com/nutrition/top-10-evidence-based-health-benefits-of-green-tea",
+          "label": "10 Evidence-Based Benefits of Green Tea",
+          "final_url": "https://www.healthline.com/nutrition/top-10-evidence-based-health-benefits-of-green-tea",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.kusmitea.com/en/blogs/tea/green-tea-rich-in-antioxidants",
+          "label": "Green tea, rich in antioxidants?",
+          "final_url": "https://www.kusmitea.com/en/blogs/tea/green-tea-rich-in-antioxidants",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.mskcc.org/cancer-care/integrative-medicine/herbs/green-tea",
+          "label": "Green Tea | Memorial Sloan Kettering Cancer Center",
+          "final_url": "https://www.mskcc.org/cancer-care/integrative-medicine/herbs/green-tea",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.nfcr.org/blog/does-green-tea-reduce-the-risk-of-cancer",
+          "label": "Does Green Tea Reduce the Risk of Cancer? - NFCR",
+          "final_url": "https://www.nfcr.org/blog/does-green-tea-reduce-the-risk-of-cancer/",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 200
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S0002916523023699",
+          "label": "Green tea intake lowers fasting serum total and LDL cholesterol in ...",
+          "final_url": "https://www.sciencedirect.com/science/article/pii/S0002916523023699",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 403
+        },
+        {
+          "url": "https://www.verywellhealth.com/does-green-tea-lower-blood-pressure-11886842",
+          "label": "What Happens to Your Blood Pressure When You Drink Green Tea ...",
+          "final_url": "https://www.verywellhealth.com/does-green-tea-lower-blood-pressure-11886842",
+          "resolution": "SOURCE_PAGE",
+          "http_status": 460
+        }
+      ]
+    }
+  ]
+}

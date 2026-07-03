@@ -52,7 +52,14 @@ def synthesize_report(
     payload = [
         {
             "question": item.question,
-            "answer": item.answer,
+            "search_results": [
+                {
+                    "title": result.title,
+                    "url": result.url,
+                    "content": result.content,
+                }
+                for result in item.search_results
+            ],
             "sources": item.sources,
         }
         for item in sub_answers
@@ -60,15 +67,16 @@ def synthesize_report(
 
     prompt = (
         "You are a research writer."
-        "\nCreate a structured report based on the sub-answers below."
+        "\nCreate a structured report based on the Tavily web search results below."
         "\nReturn ONLY a JSON object with keys: summary, sections."
         "\nSummary: 3-4 sentences."
         "\nSections: array of objects with title, content, sources."
-        "\nUse only the provided sources. Do not invent sources."
+        "\nUse only the provided source URLs. Do not invent sources."
+        "\nWrite section content from the search result snippets; do not cite URLs in prose."
         "\nIf depth is quick, use 3 concise sections. If depth is deep, use 4-5 sections."
         f"\nDepth: {depth}"
         f"\nOriginal Question: {question}"
-        f"\nSub-answers: {json.dumps(payload, ensure_ascii=True)}"
+        f"\nResearch data: {json.dumps(payload, ensure_ascii=True)}"
     )
 
     response = generate_content(prompt, grounded=False)
@@ -110,6 +118,9 @@ def synthesize_report(
         summary = _first_sentences(combined, count=4)
 
     all_sources = sorted({source for section in sections for source in section.sources})
+    source_labels: Dict[str, str] = {}
+    for item in sub_answers:
+        source_labels.update(item.source_labels)
     read_time_text = summary + " " + " ".join([s.content for s in sections])
     read_time_minutes = _estimate_read_time_minutes(read_time_text)
 
@@ -117,6 +128,7 @@ def synthesize_report(
         summary=summary,
         sections=sections,
         all_sources=all_sources,
+        source_labels=source_labels,
         read_time_minutes=read_time_minutes,
         sub_questions_used=[item.question for item in sub_answers],
     )

@@ -17,44 +17,53 @@ type ResearchResponse = {
   summary: string;
   sections: ResearchSection[];
   all_sources: string[];
+  source_labels?: Record<string, string>;
   read_time_minutes: number;
   sub_questions_used: string[];
 };
 
 const stepLabels = [
-  "Breaking down question",
-  "Searching web",
-  "Synthesizing report"
+  "Breaking down your question",
+  "Searching sources",
+  "Reading results",
+  "Drafting report"
 ];
+
+const STEP_CYCLE_MS = 2500;
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE ?? "http://127.0.0.1:8000";
 
 export default function AppPage() {
   const [question, setQuestion] = useState("");
-  const [depth, setDepth] = useState<"quick" | "deep">("quick");
+  const depth = "quick" as const;
   const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [report, setReport] = useState<ResearchResponse | null>(null);
-  const timeoutsRef = useRef<number[]>([]);
+  const intervalRef = useRef<number | null>(null);
   const easing = [0.16, 1, 0.3, 1];
 
   useEffect(() => {
     if (!loading) {
-      timeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
-      timeoutsRef.current = [];
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      setActiveStep(0);
       return;
     }
 
     setActiveStep(0);
-    timeoutsRef.current = stepLabels.map((_, index) =>
-      window.setTimeout(() => setActiveStep(index), index * 1200)
-    );
+    intervalRef.current = window.setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % stepLabels.length);
+    }, STEP_CYCLE_MS);
 
     return () => {
-      timeoutsRef.current.forEach((timeout) => window.clearTimeout(timeout));
-      timeoutsRef.current = [];
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
   }, [loading]);
 
@@ -140,10 +149,8 @@ export default function AppPage() {
         >
           <ResearchForm
             question={question}
-            depth={depth}
             loading={loading}
             onQuestionChange={handleQuestionChange}
-            onDepthChange={setDepth}
             onSubmit={handleSubmit}
           />
         </motion.div>
@@ -164,7 +171,11 @@ export default function AppPage() {
 
         <AnimatePresence>
           {loading && (
-            <ThinkingSteps steps={stepLabels} activeIndex={activeStep} />
+            <ThinkingSteps
+              steps={stepLabels}
+              activeIndex={activeStep}
+              cycling
+            />
           )}
         </AnimatePresence>
 

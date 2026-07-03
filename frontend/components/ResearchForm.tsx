@@ -4,23 +4,18 @@ import { motion } from "framer-motion";
 
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 type ResearchFormProps = {
   question: string;
-  depth: "quick" | "deep";
   loading: boolean;
   onQuestionChange: (value: string) => void;
-  onDepthChange: (value: "quick" | "deep") => void;
   onSubmit: () => void;
 };
 
 export default function ResearchForm({
   question,
-  depth,
   loading,
   onQuestionChange,
-  onDepthChange,
   onSubmit
 }: ResearchFormProps) {
   return (
@@ -49,24 +44,7 @@ export default function ResearchForm({
           Your questions are processed on demand. Briefr does not store inputs.
         </div>
       </div>
-      <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-[var(--color-secondary-text)]">
-            Depth
-          </span>
-          <ToggleGroup
-            type="single"
-            value={depth}
-            onValueChange={(value: string) => {
-              if (value === "quick" || value === "deep") {
-                onDepthChange(value as "quick" | "deep");
-              }
-            }}
-          >
-            <ToggleGroupItem value="quick">Quick</ToggleGroupItem>
-            <ToggleGroupItem value="deep">Deep</ToggleGroupItem>
-          </ToggleGroup>
-        </div>
+      <div className="flex justify-end">
         <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
           <Button
             type="submit"

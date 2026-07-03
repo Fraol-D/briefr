@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 type ThinkingStepsProps = {
   steps: string[];
   activeIndex: number;
+  cycling?: boolean;
 };
 
 const containerVariants = {
@@ -26,7 +27,13 @@ const itemVariants = {
   }
 };
 
-export default function ThinkingSteps({ steps, activeIndex }: ThinkingStepsProps) {
+export default function ThinkingSteps({
+  steps,
+  activeIndex,
+  cycling = false
+}: ThinkingStepsProps) {
+  const activeStep = steps[activeIndex] ?? steps[0];
+
   return (
     <motion.div
       variants={containerVariants}
@@ -36,10 +43,20 @@ export default function ThinkingSteps({ steps, activeIndex }: ThinkingStepsProps
       className="rounded-3xl border border-white/10 border-l-[var(--color-accent)] bg-[rgba(var(--color-brand-rgb),0.7)] p-6"
       style={{ borderLeftWidth: "3px" }}
     >
+      {cycling && (
+        <div className="mb-5 flex items-center gap-3">
+          <motion.div
+            className="h-5 w-5 rounded-full border-2 border-[var(--color-accent)] border-t-transparent"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <p className="text-sm font-medium text-white">{activeStep}</p>
+        </div>
+      )}
       <div className="space-y-4">
         {steps.map((step, index) => {
           const isActive = index === activeIndex;
-          const isDone = index < activeIndex;
+          const isDone = !cycling && index < activeIndex;
           return (
             <motion.div
               key={step}

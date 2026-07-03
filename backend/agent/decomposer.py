@@ -30,10 +30,10 @@ def _extract_json_array(text: str) -> List[str]:
     return [item for item in data if isinstance(item, str)]
 
 
-def decompose_question(question: str) -> List[str]:
+def decompose_question(question: str, max_sub_questions: int = 3) -> List[str]:
     prompt = (
         "You are a research planner."
-        "\nReturn 3-5 focused sub-questions for the user question below."
+        f"\nReturn {max_sub_questions} focused sub-questions for the user question below."
         "\nReturn ONLY a JSON array of strings, no extra text."
         f"\nQuestion: {question}"
     )
@@ -57,4 +57,4 @@ def decompose_question(question: str) -> List[str]:
         ]
         items = _unique_clean(items + fallback)
 
-    return items[:5]
+    return items[:max_sub_questions]

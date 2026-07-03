@@ -1,7 +1,11 @@
-from dataclasses import dataclass
-from typing import List, Set
+from dataclasses import dataclass, field
+from typing import Dict, List
 
-from services.gemini import generate_content, get_response_text
+from services.tavily_search import TavilyResult, search_subquestion
+from services.timing import profiler
+
+# Legacy Gemini grounded research — available for rollback:
+# from agent.researcher_gemini import research_subquestions_gemini
 
 
 @dataclass
@@ -9,47 +13,37 @@ class SubAnswer:
     question: str
     answer: str
     sources: List[str]
+    source_labels: Dict[str, str] = field(default_factory=dict)
+    search_results: List[TavilyResult] = field(default_factory=list)
 
 
-def _extract_grounding_sources(response) -> List[str]:
-    urls: Set[str] = set()
-    candidates = getattr(response, "candidates", None) or []
-    if not candidates:
-        return []
-
-    metadata = getattr(candidates[0], "grounding_metadata", None)
-    if not metadata:
-        return []
-
-    chunks = getattr(metadata, "grounding_chunks", None) or []
-    for chunk in chunks:
-        web = getattr(chunk, "web", None)
-        if not web:
-            continue
-        uri = getattr(web, "uri", None) or getattr(web, "url", None)
-        if uri:
-            urls.add(uri)
-
-    return sorted(urls)
+def _summarize_snippets(results: List[TavilyResult]) -> str:
+    snippets = [item.content for item in results if item.content.strip()]
+    if not snippets:
+        return "No search results returned."
+    return " ".join(snippets[:3])
 
 
 def research_subquestions(sub_questions: List[str]) -> List[SubAnswer]:
-    results: List[SubAnswer] = []
+    if not sub_questions:
+        return []
 
+    if profiler.enabled():
+        profiler.record_note("research_path", path="tavily")
+
+    sub_answers: List[SubAnswer] = []
     for question in sub_questions:
-        prompt = (
-            "You are a research assistant. Use grounded web search results to answer the question."
-            "\nProvide a concise, factual answer in 4-6 sentences."
-            "\nDo not include a sources list or citations in the text."
-            f"\nQuestion: {question}"
+        hits = search_subquestion(question)
+        sources = [item.url for item in hits]
+        labels = {item.url: item.title for item in hits}
+        sub_answers.append(
+            SubAnswer(
+                question=question,
+                answer=_summarize_snippets(hits),
+                sources=sources,
+                source_labels=labels,
+                search_results=hits,
+            )
         )
-        response = generate_content(prompt, grounded=True)
-        answer = get_response_text(response).strip()
-        sources = _extract_grounding_sources(response)
 
-        if not answer:
-            answer = "No grounded answer returned."
-
-        results.append(SubAnswer(question=question, answer=answer, sources=sources))
-
-    return results
+    return sub_answers

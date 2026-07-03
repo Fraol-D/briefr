@@ -16,6 +16,7 @@ type ResearchResponse = {
   summary: string;
   sections: ResearchSection[];
   all_sources: string[];
+  source_labels?: Record<string, string>;
   read_time_minutes: number;
   sub_questions_used: string[];
 };
@@ -55,13 +56,16 @@ const sectionVariants = {
   }
 };
 
-const formatSourceLabel = (value: string, index: number) => {
-  try {
-    const url = new URL(value);
-    return url.hostname.replace("www.", "");
-  } catch (err) {
-    return `Source ${index + 1}`;
+const formatSourceLabel = (
+  value: string,
+  index: number,
+  labels?: Record<string, string>
+) => {
+  const mapped = labels?.[value]?.trim();
+  if (mapped) {
+    return mapped;
   }
+  return `Source ${index + 1}`;
 };
 
 const buildReportFilename = (question: string) => {
@@ -182,7 +186,11 @@ export default function ReportDisplay({ report, question }: ReportDisplayProps) 
                       rel="noreferrer"
                     >
                       <Badge variant="indigo">
-                        {formatSourceLabel(source, sourceIndex)}
+                        {formatSourceLabel(
+                          source,
+                          sourceIndex,
+                          report.source_labels
+                        )}
                       </Badge>
                     </a>
                   ))}
@@ -200,7 +208,9 @@ export default function ReportDisplay({ report, question }: ReportDisplayProps) 
             <div className="mt-3 flex flex-wrap gap-2">
               {report.all_sources.map((source, index) => (
                 <a key={`${source}-${index}`} href={source} target="_blank" rel="noreferrer">
-                  <Badge variant="indigo">{formatSourceLabel(source, index)}</Badge>
+                  <Badge variant="indigo">
+                    {formatSourceLabel(source, index, report.source_labels)}
+                  </Badge>
                 </a>
               ))}
             </div>
