@@ -1,33 +1,6 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-*.egg-info/
-.eggs/
-.build/
-.dist/
-.build/
-dist/
-build/
-
-# Virtual environments
-.venv/
-venv/
-ENV/
-
 # Environment variables
 .env
 .env.*
-
-# Testing and tooling
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.tox/
-.coverage
-coverage.xml
 
 # Logs
 *.log
@@ -41,4 +14,5 @@ node_modules/
 .next/
 .turbo/
 .vercel/
+tsconfig.tsbuildinfo
 TEMPLATE_DESIGN.md
